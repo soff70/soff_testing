@@ -4,7 +4,7 @@ on:
     push:
         branches:
             - main
-#a
+
 jobs:
     list-changed-files:
         runs-on: ubuntu-latest
@@ -15,7 +15,6 @@ jobs:
             - name: Get added and modified .sql files
               id: changed-files
               run: |
-                  git fetch origin ${{ github.event.before }} ${{ github.event.after }}
                   git diff --diff-filter=AM --name-only ${{ github.event.before }} ${{ github.event.after }} | grep '\.sql$' > changed_files.txt
                   cat changed_files.txt
 
