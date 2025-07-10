@@ -25,6 +25,10 @@ jobs:
                   echo "Added and modified files:"
                   cat changed_files.txt
 
+            - name: Run Python script with changed files
+              run: |
+                  python your_script.py changed_files.txt
+
             - name: Upload changed files as artifact
               uses: actions/upload-artifact@v4
               with:
