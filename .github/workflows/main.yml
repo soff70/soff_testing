@@ -34,3 +34,14 @@ jobs:
               with:
                   name: changed-files
                   path: changed_files.txt
+
+            - name: Output processed files
+              run: |
+                  echo "Processed files:"
+                  cat processed_files.txt
+
+            - name: Upload processed files as artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: processed-files
+                  path: processed_files.txt
