@@ -11,21 +11,24 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
 
-            - name: Get added and modified files
+            - name: Get added and modified .sql files
               id: changed-files
               run: |
-                  git diff --diff-filter=AM --name-only ${{ github.event.before }} ${{ github.event.after }} > changed_files.txt || true
+                  git fetch origin ${{ github.event.before }} ${{ github.event.after }}
+                  git diff --diff-filter=AM --name-only ${{ github.event.before }} ${{ github.event.after }} | grep '\.sql$' > changed_files.txt
                   cat changed_files.txt
 
-            - name: Output added and modified files
+            - name: Output added and modified .sql files
               run: |
-                  echo "Added and modified files:"
+                  echo "Added and modified .sql files:"
                   cat changed_files.txt
 
-            - name: Upload changed files as artifact
+            - name: Run Python script with changed files
+              run: |
+                  python your_script.py changed_files.txt
+
+            - name: Upload changed .sql files as artifact
               uses: actions/upload-artifact@v4
               with:
                   name: changed-files
