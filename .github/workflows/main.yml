@@ -14,18 +14,18 @@ jobs:
               with:
                   fetch-depth: 0
 
-            - name: Get added and modified .sql files
+            - name: Get added and modified files
               id: changed-files
               run: |
-                  git diff --diff-filter=AM --name-only ${{ github.event.before }} ${{ github.event.after }} | grep '\.sql$' > changed_files.txt
+                  git diff --diff-filter=AM --name-only ${{ github.event.before }} ${{ github.event.after }} > changed_files.txt || true
                   cat changed_files.txt
 
-            - name: Output added and modified .sql files
+            - name: Output added and modified files
               run: |
-                  echo "Added and modified .sql files:"
+                  echo "Added and modified files:"
                   cat changed_files.txt
 
-            - name: Upload changed .sql files as artifact
+            - name: Upload changed files as artifact
               uses: actions/upload-artifact@v4
               with:
                   name: changed-files
